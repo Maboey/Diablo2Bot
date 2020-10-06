@@ -1,6 +1,7 @@
 import Diablo2Functions as D2F
 import FakeInput as FI
 import time
+import os
 
 D2F.LaunchGame()
 run = True
@@ -21,6 +22,7 @@ while run:
         D2F.DrinkPotion()
     elif not D2F.LookForAndAttackRedEnemy(): # always true error in function !!!! <--------------- ERROR
         D2F.MoveCharacter()
-print("you died")
+print("Bot Stopped")
+os.remove("ScreenWiew.png")
 
 
