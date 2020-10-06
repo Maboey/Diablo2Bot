@@ -10,7 +10,7 @@ import random
 
 def LaunchGame():
     dirname = os.path.dirname(__file__)
-    filename = os.path.join(dirname, '../Game/DiabloII.exe')
+    filename = os.path.join(dirname, '../DiabloII.exe')
     os.system(filename)
     time.sleep(5)
     FI.KeyboardInput('enter')
@@ -28,7 +28,7 @@ def GetRemainingLifePercentage():
     remainingLifePercentage = 10
     mainPlayerLifePositionX = 70
     mainPlayerLifePositionY = 510
-    lifeRangeY = 578 - 510
+    lifeRangeY = 550 - 510
     screenView = Image.open(FI.GetScreenImage())
     pixels = screenView.load()
     for i in range(lifeRangeY):
@@ -49,7 +49,7 @@ def GetRemainingManaPercentage():
     remainingManaPercentage = 10
     mainPlayerManaPositionX = 730
     mainPlayerManaPositionY = 510
-    ManaRangeY = 578 - 510
+    ManaRangeY = 550 - 510
     screenView = Image.open(FI.GetScreenImage())
     pixels = screenView.load()
     for i in range(ManaRangeY):
@@ -68,61 +68,106 @@ def GetRemainingManaPercentage():
 
 def MoveCharacter(randomChoice = True,direction = ""):
     if randomChoice:
-        choice = random.randrange(1,4)
-        if choice == 2:
+        choice = random.randrange(0,100)
+
+        if choice <= 25:
             direction = "up"
-        if choice == 1:
+        elif choice <= 50:
             direction = "down"
-        if choice == 4:
+        elif choice <= 75:
             direction = "right"
-        if choice == 3:
+        elif choice <= 100:
             direction = "left"
     screenSize = FI.GetScreenSize()
     if direction == "up":
         FI.ClickXY(screenSize[0]//2,screenSize[1]//10,0)
+        time.sleep(1)
     if direction == "down":
         FI.ClickXY(screenSize[0]//2,screenSize[1]//10*9,0)
+        time.sleep(1)
     if direction == "left":
         FI.ClickXY(screenSize[0]//10,screenSize[1]//2,0)
+        time.sleep(1)
     if direction == "right":
         FI.ClickXY(screenSize[0]//10*9,screenSize[1]//2,0)
+        time.sleep(1)
 
 def RandomAttackClose():
     screenSize = FI.GetScreenSize()
     screenCenter = [screenSize[0]//2,screenSize[1]//2]
-    rangeTryAttackX = screenSize[0]//6
-    rangeTryAttackY = screenSize[1]//3
-    startingPointX = screenCenter[0]-(rangeTryAttackX//2)
-    startingPointY = screenCenter[1]-(rangeTryAttackY//2)
+    attackRange = screenSize[1]//10
+    FI.ClickXY(screenCenter[0]-attackRange,screenCenter[1]-attackRange,0)
+    time.sleep(0.25)
+    FI.ClickXY(screenCenter[0]+attackRange,screenCenter[1]-attackRange,0)
+    time.sleep(0.25)
+    FI.ClickXY(screenCenter[0]-attackRange,screenCenter[1]+attackRange,0)
+    time.sleep(0.25)
+    FI.ClickXY(screenCenter[0]+attackRange,screenCenter[1]+attackRange,0)
+    time.sleep(0.25)
 
-    for i in range(rangeTryAttackX//5):
-        for j in range(rangeTryAttackY//5):
-            FI.ClickXY(startingPointX+i*5,startingPointY+j*5,0)
-
-def DrinkPotion(option):
-    FI.KeyboardInput(option)
+def DrinkPotion():
+    for i in range(4):
+            if not(IsGameRunning()):
+                break
+            FI.KeyboardInput(str(i+1))
+            lifePercentage = GetRemainingLifePercentage()
+            if lifePercentage > 25:
+                break
     
-def GetToTheBattleField():
-    MoveCharacter(False,"down")
-    time.sleep(1)
-    MoveCharacter(False,"left")
-    time.sleep(1)
-    MoveCharacter(False,"down")
-    time.sleep(1)
-    MoveCharacter(False,"left")
-    time.sleep(1)
-    MoveCharacter(False,"down")
-    time.sleep(1)
-    MoveCharacter(False,"left")
-    time.sleep(1)
-    MoveCharacter(False,"down")
-    time.sleep(1)
-    MoveCharacter(False,"left")
-    time.sleep(1)
-    MoveCharacter(False,"down")
-    time.sleep(1)
-    MoveCharacter(False,"left")
-    time.sleep(1)
+def GetToTheBattleField(track):
+    if track == "down_left":
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"left")
+    if track == "down_right":
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"down")
 
-    
+def IsGameRunning():
+    screenView = Image.open(FI.GetScreenImage())
+    pixels = screenView.load()
+    pixelColor = pixels[6,567]
+    if pixelColor[0] == 74 and pixelColor[1] == 74 and pixelColor[2] == 74:
+        return True
+    else:
+        return False
+
+def LookForAndAttackRedEnemy():
+    enemyFound = False
+    enemyPosition = [0,0]
+    screenView = Image.open(FI.GetScreenImage())
+    screenSize = FI.GetScreenSize()
+    rangeHitAroundPlayer = 100
+    pixels = screenView.load()
+
+    rangeHitAroundPlayerStartingX = (screenSize[0]//2) - rangeHitAroundPlayer
+    rangeHitAroundPlayerStartingY = (screenSize[1]//2) - rangeHitAroundPlayer
+
+    for x in range(rangeHitAroundPlayer*2):
+        for y in range(rangeHitAroundPlayer*2):
+            pixel = pixels[rangeHitAroundPlayerStartingX + x,rangeHitAroundPlayerStartingY + y]
+            if  pixel[0] > 150 and pixel[1] < 50 and pixel[2] < 50:
+                enemyPosition = [rangeHitAroundPlayerStartingX + x,rangeHitAroundPlayerStartingY + y]
+                enemyFound = True
+                break
+    if enemyFound:
+        FI.ClickXY(enemyPosition[0],enemyPosition[1],0)
+    return enemyFound
     
