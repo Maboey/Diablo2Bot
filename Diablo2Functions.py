@@ -176,11 +176,21 @@ def LookForAndAttackRedEnemy():
 
     for x in range(rangeHitAroundPlayer*2):
         for y in range(rangeHitAroundPlayer*2):
-            pixel = pixels[rangeHitAroundPlayerStartingX + x,rangeHitAroundPlayerStartingY + y]
-            if  pixel[0] > 100 and pixel[1] < 40 and pixel[2] < 40:
-                enemyPosition = [rangeHitAroundPlayerStartingX + x,rangeHitAroundPlayerStartingY + y]
-                enemyFound = True
-                break
+            pixel0 = pixels[rangeHitAroundPlayerStartingX + 0 + x,rangeHitAroundPlayerStartingY + y + 0]
+            pixel1 = pixels[rangeHitAroundPlayerStartingX + 1 + x,rangeHitAroundPlayerStartingY + y + 0]
+            pixel2 = pixels[rangeHitAroundPlayerStartingX + 2 + x,rangeHitAroundPlayerStartingY + y + 0]
+            pixel3 = pixels[rangeHitAroundPlayerStartingX + 0 + x,rangeHitAroundPlayerStartingY + y + 1]
+            pixel4 = pixels[rangeHitAroundPlayerStartingX + 1 + x,rangeHitAroundPlayerStartingY + y + 1]
+            pixel5 = pixels[rangeHitAroundPlayerStartingX + 2 + x,rangeHitAroundPlayerStartingY + y + 1]
+            pixel6 = pixels[rangeHitAroundPlayerStartingX + 0 + x,rangeHitAroundPlayerStartingY + y + 2]
+            pixel7 = pixels[rangeHitAroundPlayerStartingX + 1 + x,rangeHitAroundPlayerStartingY + y + 2]
+            pixel8 = pixels[rangeHitAroundPlayerStartingX + 2 + x,rangeHitAroundPlayerStartingY + y + 2]
+            pixelArrow = [pixel0,pixel1,pixel2,pixel3,pixel4,pixel5,pixel6,pixel7,pixel8]
+            for p in pixelArrow:
+                if  p[0] > 100 and p[1] < 40 and p[2] < 40:
+                    enemyPosition = [rangeHitAroundPlayerStartingX + x,rangeHitAroundPlayerStartingY + y]
+                    enemyFound = True
+                    break
     if enemyFound:
         FI.ClickXY(enemyPosition[0],enemyPosition[1],0)
         time.sleep(0.5)
