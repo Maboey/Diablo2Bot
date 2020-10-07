@@ -188,7 +188,7 @@ def LookForAndAttackRedEnemy():
             pixelArrow = [pixel0,pixel1,pixel2,pixel3,pixel4,pixel5,pixel6,pixel7,pixel8]
             for p in pixelArrow:
                 if  p[0] > 100 and p[1] < 40 and p[2] < 40:
-                    enemyPosition = [rangeHitAroundPlayerStartingX + x,rangeHitAroundPlayerStartingY + y]
+                    enemyPosition = [rangeHitAroundPlayerStartingX + x + 2,rangeHitAroundPlayerStartingY + y + 2]
                     enemyFound = True
                     break
     if enemyFound:
