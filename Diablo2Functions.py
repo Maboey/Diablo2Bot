@@ -67,6 +67,7 @@ def GetRemainingManaPercentage():
     return remainingManaPercentage
 
 def MoveCharacter(randomChoice = True,direction = ""):
+    timeBetweenMoves = 0.6
     if randomChoice:
         choice = random.randrange(0,100)
 
@@ -81,16 +82,16 @@ def MoveCharacter(randomChoice = True,direction = ""):
     screenSize = FI.GetScreenSize()
     if direction == "up":
         FI.ClickXY(screenSize[0]//2,screenSize[1]//10,0)
-        time.sleep(1)
+        time.sleep(timeBetweenMoves)
     if direction == "down":
         FI.ClickXY(screenSize[0]//2,screenSize[1]//10*9,0)
-        time.sleep(1)
+        time.sleep(timeBetweenMoves)
     if direction == "left":
         FI.ClickXY(screenSize[0]//10,screenSize[1]//2,0)
-        time.sleep(1)
+        time.sleep(timeBetweenMoves)
     if direction == "right":
         FI.ClickXY(screenSize[0]//10*9,screenSize[1]//2,0)
-        time.sleep(1)
+        time.sleep(timeBetweenMoves)
 
 def RandomAttackClose():
     screenSize = FI.GetScreenSize()
@@ -139,6 +140,19 @@ def GetToTheBattleField(track):
         MoveCharacter(False,"right")
         MoveCharacter(False,"down")
         MoveCharacter(False,"down")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"down")
 
 def IsGameRunning():
     screenView = Image.open(FI.GetScreenImage())
@@ -163,11 +177,11 @@ def LookForAndAttackRedEnemy():
     for x in range(rangeHitAroundPlayer*2):
         for y in range(rangeHitAroundPlayer*2):
             pixel = pixels[rangeHitAroundPlayerStartingX + x,rangeHitAroundPlayerStartingY + y]
-            if  pixel[0] > 150 and pixel[1] < 50 and pixel[2] < 50:
+            if  pixel[0] > 100 and pixel[1] < 40 and pixel[2] < 40:
                 enemyPosition = [rangeHitAroundPlayerStartingX + x,rangeHitAroundPlayerStartingY + y]
                 enemyFound = True
                 break
     if enemyFound:
         FI.ClickXY(enemyPosition[0],enemyPosition[1],0)
+        time.sleep(0.5)
     return enemyFound
-    

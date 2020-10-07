@@ -6,7 +6,7 @@ import os
 D2F.LaunchGame()
 run = True
 lifePercentage = D2F.GetRemainingLifePercentage()
-D2F.GetToTheBattleField("down_right")
+D2F.GetToTheBattleField("down_left")
 while run:
 # get old and new life points values 
     oldLifePercentage = lifePercentage
@@ -16,13 +16,12 @@ while run:
     if not D2F.IsGameRunning():
         run = False
     
-# character attitude
-    #if life is low drink potion else try to find enemy and if there's no one just walk randomly
-    if lifePercentage < 50:
-        D2F.DrinkPotion()
-    elif not D2F.LookForAndAttackRedEnemy(): # always true error in function !!!! <--------------- ERROR
+# caracter attitude
+    if lifePercentage<oldLifePercentage:
+        if not D2F.LookForAndAttackRedEnemy():
+            if lifePercentage<25:
+                D2F.DrinkPotion()
+    else:
         D2F.MoveCharacter()
 print("Bot Stopped")
 os.remove("ScreenWiew.png")
-
-
