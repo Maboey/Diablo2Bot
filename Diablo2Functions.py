@@ -116,17 +116,35 @@ def DrinkPotion():
                 break
     
 def GetToTheBattleField(track):
+
     if track == "down_left":
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"left")
         MoveCharacter(False,"down")
         MoveCharacter(False,"left")
         MoveCharacter(False,"down")
         MoveCharacter(False,"left")
         MoveCharacter(False,"down")
         MoveCharacter(False,"left")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"down")
         MoveCharacter(False,"left")
         MoveCharacter(False,"down")
         MoveCharacter(False,"left")
+        MoveCharacter(False,"down")
+        
+
     if track == "down_right":
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
         MoveCharacter(False,"down")
         MoveCharacter(False,"right")
         MoveCharacter(False,"down")
@@ -134,25 +152,17 @@ def GetToTheBattleField(track):
         MoveCharacter(False,"down")
         MoveCharacter(False,"down")
         MoveCharacter(False,"right")
-        MoveCharacter(False,"right")
-        MoveCharacter(False,"right")
         MoveCharacter(False,"down")
         MoveCharacter(False,"right")
         MoveCharacter(False,"down")
-        MoveCharacter(False,"down")
-        MoveCharacter(False,"down")
-        MoveCharacter(False,"right")
-        MoveCharacter(False,"down")
-        MoveCharacter(False,"right")
-        MoveCharacter(False,"down")
-        MoveCharacter(False,"down")
-        MoveCharacter(False,"right")
-        MoveCharacter(False,"right")
-        MoveCharacter(False,"right")
-        MoveCharacter(False,"down")
-        MoveCharacter(False,"right")
-        MoveCharacter(False,"down")
-        MoveCharacter(False,"down")
+
+    if track == "up_left":
+        MoveCharacter(False,"up")
+        MoveCharacter(False,"left")
+
+    if track == "up_right":
+        MoveCharacter(False,"up")
+        MoveCharacter(False,"right")        
 
 def IsGameRunning():
     screenView = Image.open(FI.GetScreenImage())
