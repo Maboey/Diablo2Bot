@@ -3,7 +3,8 @@ Fake Input
 """
 from win32api import GetSystemMetrics
 from pynput.keyboard import Key, Controller as KeyboardController
-from pynput.mouse import Button, Controller as MouseController
+#from pynput.mouse import Button, Controller as MouseController
+import mouse
 from PIL import ImageGrab
 import os
 
@@ -14,15 +15,18 @@ def GetScreenSize():
      ", Y = ", str(screenSize[1]))
     return screenSize
 
-def ClickXY(x,y,buttonLR):
-    mouse = MouseController()
-    mouse.position = (x,y)
-    if(buttonLR == 0):
-        mouse.press(Button.left)
-        mouse.release(Button.left)
-    else:
-        mouse.press(Button.right)
-        mouse.release(Button.right)
+# def ClickXY(x,y,buttonLR):
+#     mouse = MouseController()
+#     mouse.position = (x,y)
+#     if(buttonLR == 0):
+#         mouse.press(Button.left)
+#         mouse.release(Button.left)
+#     else:
+#         mouse.press(Button.right)
+#         mouse.release(Button.right)
+def ClickXY(x,y):
+    mouse.move(x,y)
+    mouse.click()
 
 def KeyboardInput(k_input):
     keyboard = KeyboardController()

@@ -19,9 +19,9 @@ def LaunchGame():
     time.sleep(1)
     FI.KeyboardInput('enter')
     screenSize = FI.GetScreenSize()
-    FI.ClickXY(screenSize[0]//2,screenSize[1]//2,0)
+    FI.ClickXY(screenSize[0]//2,screenSize[1]//2)
     time.sleep(1)
-    FI.ClickXY(screenSize[0]//8*7,screenSize[1]//12*11,0)
+    FI.ClickXY(screenSize[0]//8*7,screenSize[1]//12*11)
     time.sleep(3)
 
 def GetRemainingLifePercentage():
@@ -81,29 +81,29 @@ def MoveCharacter(randomChoice = True,direction = ""):
             direction = "left"
     screenSize = FI.GetScreenSize()
     if direction == "up":
-        FI.ClickXY(screenSize[0]//2,screenSize[1]//10,0)
+        FI.ClickXY(screenSize[0]//2,screenSize[1]//10)
         time.sleep(timeBetweenMoves)
     if direction == "down":
-        FI.ClickXY(screenSize[0]//2,screenSize[1]//10*9,0)
+        FI.ClickXY(screenSize[0]//2,screenSize[1]//10*9)
         time.sleep(timeBetweenMoves)
     if direction == "left":
-        FI.ClickXY(screenSize[0]//10,screenSize[1]//2,0)
+        FI.ClickXY(screenSize[0]//10,screenSize[1]//2)
         time.sleep(timeBetweenMoves)
     if direction == "right":
-        FI.ClickXY(screenSize[0]//10*9,screenSize[1]//2,0)
+        FI.ClickXY(screenSize[0]//10*9,screenSize[1]//2)
         time.sleep(timeBetweenMoves)
 
 def RandomAttackClose():
     screenSize = FI.GetScreenSize()
     screenCenter = [screenSize[0]//2,screenSize[1]//2]
     attackRange = screenSize[1]//10
-    FI.ClickXY(screenCenter[0]-attackRange,screenCenter[1]-attackRange,0)
+    FI.ClickXY(screenCenter[0]-attackRange,screenCenter[1]-attackRange)
     time.sleep(0.25)
-    FI.ClickXY(screenCenter[0]+attackRange,screenCenter[1]-attackRange,0)
+    FI.ClickXY(screenCenter[0]+attackRange,screenCenter[1]-attackRange)
     time.sleep(0.25)
-    FI.ClickXY(screenCenter[0]-attackRange,screenCenter[1]+attackRange,0)
+    FI.ClickXY(screenCenter[0]-attackRange,screenCenter[1]+attackRange)
     time.sleep(0.25)
-    FI.ClickXY(screenCenter[0]+attackRange,screenCenter[1]+attackRange,0)
+    FI.ClickXY(screenCenter[0]+attackRange,screenCenter[1]+attackRange)
     time.sleep(0.25)
 
 def DrinkPotion():
@@ -147,14 +147,22 @@ def GetToTheBattleField(track):
         MoveCharacter(False,"right")
         MoveCharacter(False,"down")
         MoveCharacter(False,"right")
-        MoveCharacter(False,"down")
         MoveCharacter(False,"right")
         MoveCharacter(False,"down")
         MoveCharacter(False,"down")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
         MoveCharacter(False,"right")
         MoveCharacter(False,"down")
         MoveCharacter(False,"right")
         MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"down")
+        MoveCharacter(False,"right")
 
     if track == "up_left":
         MoveCharacter(False,"up")
@@ -202,6 +210,6 @@ def LookForAndAttackRedEnemy():
                     enemyFound = True
                     break
     if enemyFound:
-        FI.ClickXY(enemyPosition[0],enemyPosition[1],0)
+        FI.ClickXY(enemyPosition[0],enemyPosition[1])
         time.sleep(0.5)
     return enemyFound
