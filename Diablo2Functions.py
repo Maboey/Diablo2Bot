@@ -19,52 +19,41 @@ def LaunchGame():
     time.sleep(1)
     FI.KeyboardInput('enter')
     screenSize = FI.GetScreenSize()
+    print("ScreenSize : X = ", str(screenSize[0]),", Y = ", str(screenSize[1]))
     FI.ClickXY(screenSize[0]//2,screenSize[1]//2)
     time.sleep(1)
     FI.ClickXY(screenSize[0]//8*7,screenSize[1]//12*11)
     time.sleep(3)
 
 def GetRemainingLifePercentage():
-    remainingLifePercentage = 10
-    mainPlayerLifePositionX = 70
-    mainPlayerLifePositionY = 510
-    lifeRangeY = 550 - 510
+    lifePercentage = 0
+    lifePosX = 69
+    lifeMinPosY = 577
+    lifeMaxPosY = 508
+    
     screenView = Image.open(FI.GetScreenImage())
     pixels = screenView.load()
-    for i in range(lifeRangeY):
-        pixelColor = pixels[mainPlayerLifePositionX,mainPlayerLifePositionY + i]
-        if pixelColor[1]<10 and pixelColor[2]<10:
-            if pixelColor[0] > 35:
-                remainingLifePercentage = lifeRangeY - i
-                break
-        elif pixelColor[1]<20 and pixelColor[2]<20:
-            if pixelColor[0] > 60:
-                remainingLifePercentage = lifeRangeY - i
-                break
-
-    remainingLifePercentage = round(remainingLifePercentage/lifeRangeY*100)
-    return remainingLifePercentage
+    for yRange in range (lifeMinPosY-lifeMaxPosY):
+        color = pixels[lifePosX,lifeMaxPosY+yRange]
+        if color[0] > (2*color[1]) and color[0]> (2*color[2]):
+            lifePercentage = round((((lifeMinPosY-lifeMaxPosY)-yRange)/(lifeMinPosY-lifeMaxPosY))*100)
+            break
+    return lifePercentage
 
 def GetRemainingManaPercentage():
-    remainingManaPercentage = 10
-    mainPlayerManaPositionX = 730
-    mainPlayerManaPositionY = 510
-    ManaRangeY = 550 - 510
+    manaPercentage = 0
+    manaPosX = 726
+    manaMinPosY = 577
+    manaMaxPosY = 508
+
     screenView = Image.open(FI.GetScreenImage())
     pixels = screenView.load()
-    for i in range(ManaRangeY):
-        pixelColor = pixels[mainPlayerManaPositionX,mainPlayerManaPositionY + i]
-        if pixelColor[0]<10 and pixelColor[1]<10:
-            if pixelColor[2] > 35:
-                remainingManaPercentage = ManaRangeY - i
-                break
-        elif pixelColor[0]<20 and pixelColor[1]<20:
-            if pixelColor[2] > 60:
-                remainingManaPercentage = ManaRangeY - i
-                break
-
-    remainingManaPercentage = round(remainingManaPercentage/ManaRangeY*100)
-    return remainingManaPercentage
+    for yRange in range (manaMinPosY-manaMaxPosY):
+        color = pixels[manaPosX,manaMaxPosY+yRange]
+        if color[2] > (2*color[1]) and color[2]> (2*color[0]):
+            manaPercentage = round((((manaMinPosY-manaMaxPosY)-yRange)/(manaMinPosY-manaMaxPosY))*100)
+            break
+    return manaPercentage
 
 def MoveCharacter(randomChoice = True,direction = ""):
     timeBetweenMoves = 0.6

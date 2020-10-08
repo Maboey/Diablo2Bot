@@ -9,7 +9,6 @@ import os
 
 def GetScreenSize():
     screenSize = [GetSystemMetrics(0),GetSystemMetrics(1)]
-    print("ScreenSize : X = ", str(screenSize[0]),", Y = ", str(screenSize[1]))
     return screenSize
 
 def ClickXY(x,y):
