@@ -70,7 +70,6 @@ def MoveCharacter(randomChoice = True,direction = ""):
     timeBetweenMoves = 0.6
     if randomChoice:
         choice = random.randrange(0,100)
-
         if choice <= 25:
             direction = "up"
         elif choice <= 50:
@@ -106,14 +105,29 @@ def RandomAttackClose():
     FI.ClickXY(screenCenter[0]+attackRange,screenCenter[1]+attackRange)
     time.sleep(0.25)
 
-def DrinkPotion():
-    for i in range(4):
-            if not(IsGameRunning()):
-                break
-            FI.KeyboardInput(str(i+1))
-            lifePercentage = GetRemainingLifePercentage()
-            if lifePercentage > 25:
-                break
+def checkRemainingPotions():
+    screenView = Image.open(FI.GetScreenImage())
+    pixels = screenView.load()
+    remainingPotions = ["None","None","None","None"]
+    lifePotionsColor = [173,41,24]
+    manaPotionsColor = [49,49,156]
+    potion1Location = [436,578]
+    potion2Location = [467,578]
+    potion3Location = [498,578]
+    potion4Location = [529,578]
+    potionsLocations = [potion1Location,potion2Location,potion3Location,potion4Location]
+    for potionsLocation in potionsLocations:
+        if pixels[potionsLocation[0],potionsLocation[1]] == lifePotionsColor:
+            remainingPotions[potionsLocation.index] = "lifePotion"
+        elif pixels[potionsLocation[0],potionsLocation[1]] == manaPotionsColor:
+            remainingPotions[potionsLocation.index] = "manaPotion"
+    return remainingPotions
+
+def DrinkPotion(remainingPotions):
+    for potion in remainingPotions:
+        if potion == "lifePotion":
+            FI.KeyboardInput(str(potion.index))
+            break  
     
 def GetToTheBattleField(track):
 
@@ -135,7 +149,6 @@ def GetToTheBattleField(track):
         MoveCharacter(False,"down")
         MoveCharacter(False,"left")
         MoveCharacter(False,"down")
-        
 
     if track == "down_right":
         MoveCharacter(False,"right")
@@ -165,12 +178,33 @@ def GetToTheBattleField(track):
         MoveCharacter(False,"right")
 
     if track == "up_left":
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"left")
         MoveCharacter(False,"up")
         MoveCharacter(False,"left")
+        MoveCharacter(False,"up")
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"up")
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"up")
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"left")
+        MoveCharacter(False,"up")
+        MoveCharacter(False,"up")
 
     if track == "up_right":
+        MoveCharacter(False,"right")
         MoveCharacter(False,"up")
-        MoveCharacter(False,"right")        
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"up")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"up")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"up")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"right")
+        MoveCharacter(False,"up")
+        MoveCharacter(False,"up")   
 
 def IsGameRunning():
     screenView = Image.open(FI.GetScreenImage())
@@ -213,3 +247,5 @@ def LookForAndAttackRedEnemy():
         FI.ClickXY(enemyPosition[0],enemyPosition[1])
         time.sleep(0.5)
     return enemyFound
+
+

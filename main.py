@@ -11,22 +11,20 @@ run = True
 
 #get remaining life percentage
 lifePercentage = D2F.GetRemainingLifePercentage()
-D2F.GetToTheBattleField("down_right")
-
-
+D2F.GetToTheBattleField("up_left")
 
 while run:
     # get old and new life points values 
     oldLifePercentage = lifePercentage
     lifePercentage = D2F.GetRemainingLifePercentage()
-    
+
     # detect attack and respond for 10 sec
     if lifePercentage < oldLifePercentage:
         startingTimeAttack = time.time()
         while time.time() < (startingTimeAttack + attackDuration):
             D2F.LookForAndAttackRedEnemy()
             if lifePercentage < 50:
-                D2F.DrinkPotion()
+                D2F.DrinkPotion(D2F.checkRemainingPotions())
             if not D2F.IsGameRunning:
                 run = False
                 break
