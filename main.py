@@ -3,7 +3,7 @@ import FakeInput as FI
 import time
 import os
 
-attackDuration = 10 # duration of an attack since enemy is spotted
+attackDuration = 3 # duration of an attack since enemy is spotted
 
 #launching the game
 D2F.LaunchGame()
@@ -15,24 +15,25 @@ D2F.GetToTheBattleField("down_left")
 
 while run:
     # get old and new life points values 
+
+    
     oldLifePercentage = lifePercentage
     lifePercentage = D2F.GetRemainingLifePercentage()
-    print("RemainingLife = " + str(lifePercentage) + "%")
 
-    # detect attack and respond for 10 sec
+    # detect attack and respond for x sec
     if lifePercentage < oldLifePercentage:
         print("lost life")
         startingTimeAttack = time.time()
-        print("Started Attacking")
         while time.time() < (startingTimeAttack + attackDuration):
             D2F.LookForAndAttackRedEnemy()
+            #if game stops, stop the attack and bot
             if not D2F.IsGameRunning:
                 run = False
-                break
+                break     
     else:
+        #D2F.LookForAndGrabItems()
         D2F.MoveCharacter()
-    if lifePercentage < 50:
-        print("Drank 1 Life Potion")
+    if lifePercentage < 25:
         D2F.DrinkPotion(D2F.checkRemainingPotions())
 
     # stop bot if game window closes
